@@ -12,10 +12,10 @@ with con:
 
     cur = con.cursor()
 
-    cur.execute("DROP TABLE IF EXISTS person")
+    cur.execute("DROP TABLE IF EXISTS student")
     cur.execute("DROP TABLE IF EXISTS quiz")
     cur.execute("DROP TABLE IF EXISTS quiz_result")
-    cur.execute("CREATE TABLE person (id INTEGER PRIMARY KEY ASC, name TEXT)")
+    cur.execute("CREATE TABLE student (id INTEGER PRIMARY KEY ASC, name TEXT)")
     cur.execute("CREATE TABLE quiz (quiz_id INTEGER PRIMARY KEY ASC, subject TEXT, length INTEGER, date TEXT)")
     cur.execute("CREATE TABLE quiz_result (quiz_id INTEGER, student_name TEXT, score INTEGER, FOREIGN KEY (quiz_id) REFERENCES quiz (quiz_id))")
     print("Tables created successfully")
