@@ -3,7 +3,7 @@
 {% block header %}
   <h1>{% block title %}quizapp Dashboard{% endblock %}</h1>
   {% if g.user %}
-    <a class="action" href="{{ url_for('dashboard.add') }}">Add</a>
+    <a class="action" href="{{ url_for('dashboard.student.add') }}">Add</a>
   {% endif %}
 {% endblock %}
 

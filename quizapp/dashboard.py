@@ -18,4 +18,8 @@ def index():
         'SELECT quiz_id, subject, length, date FROM quizzes'
     ).fetchall()
     return render_template('dashboard/dashboard.html', students=students, quizzes=quizzes)
+
+@bp.route('/student/add')
+def add_student():
+    render_template('dashboard/addstudent.html')
     
