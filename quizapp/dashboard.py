@@ -100,6 +100,7 @@ def view_results(id):
 
     return render_template('dashboard/viewresults.html', results=results)
 
+
 @bp.route('/result/add', methods=('GET', 'POST'))
 def add_result():
     db = get_db()
