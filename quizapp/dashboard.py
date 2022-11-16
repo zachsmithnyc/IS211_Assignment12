@@ -21,5 +21,27 @@ def index():
 
 @bp.route('/student/add')
 def add_student():
-    render_template('dashboard/addstudent.html')
+    if request.method == 'POST':
+        name = request.form['name']
+        db = get_db()
+        error = None
+
+        if not name:
+            error = 'Please enter a name.'
+        
+        if error is None:
+            try:
+                db.execute(
+                    'INSET INTO students (name) VALUES (?,)',
+                    (name,)
+                    )
+                db.commit()
+            except db.IntegrityError:
+                error = f"Student {name} has already been added."
+            else:
+                return redirect(url_for('dashboard'))
+        
+        flash(error)
+
+    return render_template('dashboard/addstudent.html')
     
