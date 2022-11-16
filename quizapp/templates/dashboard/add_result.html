@@ -8,21 +8,21 @@
 <form method="post">
     <label for="name">Student Name</label>
     <select name="name" id="name">
-        {{% for option in options %}}
+        {% for option in options %}
             <option value="{{ option['name'] }}">{{ option['name'] }}</option>
-        {{% endfor %%}}
+        {% endfor %}
     </select>
     <label for="student_id">Student ID</label>
     <select name="student_id" id="student_id">
-        {{% for option in options %}}
+        {% for option in options %}
             <option value="{{ option['id'] }}">{{ option['id'] }}</option>
-        {{% endfor %%}}
+        {% endfor %}
     </select>
     <label for="quiz_id">Quiz ID</label>
     <select name="quiz_id" id="quiz_id">
-        {{% for option in options %}}
+        {% for option in options %}
             <option value="{{ option['quiz_id'] }}">{{ option['quiz_id'] }}</option>
-        {{% endfor %%}}
+        {% endfor %}
     </select>
     <label for="score">Quiz Score</label>
     <input type="number" name="score">

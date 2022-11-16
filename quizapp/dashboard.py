@@ -102,16 +102,15 @@ def view_results(id):
 
 @bp.route('/result/add', methods=('GET', 'POST'))
 def add_result():
-    if request.method == 'GET':
-        db = get_db()
-        options = db.execute(
-            'SELECT id, name, q.quiz_id'
-            ' FROM students JOIN quizzes q'
-        ).fetchall()
+    db = get_db()
+    options = db.execute(
+        'SELECT s.id, s.name, q.quiz_id'
+        ' FROM quizzes q CROSS JOIN students s'
+    ).fetchall()
 
     if request.method == 'POST':
         student_id = request.form['student_id']
-        student_name = request.form['student_name']
+        student_name = request.form['name']
         quiz_id = request.form['quiz_id']
         score = request.form['score']
         error = None
@@ -135,7 +134,7 @@ def add_result():
                 (quiz_id, student_id, student_name, score)
             )
             db.commit()
-            redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard'))
 
     return render_template('dashboard/add_result.html', options=options)
 
