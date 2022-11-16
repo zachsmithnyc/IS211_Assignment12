@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}quizapp Add Quiz{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <label for="subject">Enter Quiz Subject</label>
+    <input type="text" name="subject">
+    <label for="length">Enter Quiz Length</label>
+    <input type="text" name="length">
+    <label for="date">Enter Quiz Date</label>
+    <input type="text" name="date">
+    <input type="submit" value="Add Quiz">
+</form>
+{% endblock %}
