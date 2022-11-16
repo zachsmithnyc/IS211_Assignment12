@@ -2,9 +2,6 @@
 
 {% block header %}
   <h1>{% block title %}quizapp Add Student{% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('dashboard.add') }}">Add</a>
-  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -12,3 +9,4 @@
     <label for="name">New Student Name</label>
     <input type="name" name="name">
 </form>
+{% endblock %}
