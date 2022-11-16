@@ -53,14 +53,13 @@ def add_quiz():
         subject = request.form['subject']
         length = request.form['length']
         date = request.form['date']
-        db = get_db()
         error = None
 
         if not subject:
             error = 'Please enter a subject.'
-        if not length:
+        elif not length:
             error = 'Please enter a length'
-        if not date:
+        elif not date:
             error = 'Please enter a date'
         
         if error is not None:
@@ -79,11 +78,65 @@ def add_quiz():
 
 def get_results(id):
     results = get_db().execute(
-        'SELECT '
-    )
+        'SELECT quiz_id, student_name, student_id, score'
+        ' FROM quiz_results q JOIN students s ON q.student_id = s.id'
+        ' WHERE q.student_id = ?',
+        (id,)
+    ).fetchall()
+
+    return results
 
 
-@bp.route('/student/<int:id>', methods = ('POST'))
+@bp.route('/results/<int:id>', methods=('GET', 'POST'))
 def view_results(id):
-    return render_template('dashboard/viewresults')
+    results = get_results(id)
+    error = None
+
+    if not results:
+        error = 'No Results Available'
+    
+    if error is not None:
+        flash(error)
+
+    return render_template('dashboard/viewresults.html', results=results)
+
+@bp.route('/result/add', methods=('GET', 'POST'))
+def add_result():
+    if request.method == 'GET':
+        db = get_db()
+        options = db.execute(
+            'SELECT id, name, q.quiz_id'
+            ' FROM students JOIN quizzes q'
+        ).fetchall()
+
+    if request.method == 'POST':
+        student_id = request.form['student_id']
+        student_name = request.form['student_name']
+        quiz_id = request.form['quiz_id']
+        score = request.form['score']
+        error = None
+
+        if not student_id:
+            error = "Please enter student id"
+        elif not student_name:
+            error = "Please enter student name"
+        elif not quiz_id:
+            error = "Please enter quiz_id"
+        elif not score:
+            error = "Please enter score"
+        
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO quiz_results (quiz_id, student_id, student_name, score)'
+                ' VALUES (?, ?, ?, ?)',
+                (quiz_id, student_id, student_name, score)
+            )
+            db.commit()
+            redirect(url_for('dashboard'))
+
+    return render_template('dashboard/add_result.html', options=options)
+
     

@@ -11,17 +11,17 @@
 {% block content %} 
     <table>
         <tr>
-            <th>id</th>
-            <th>Subject</th>
-            <th>Number of Questions</th>
-            <th>Date</th>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Quiz ID</th>
+            <th>Score</th>
         </tr>
-        {% for quiz in quizzes %}
+        {% for result in results %}
             <tr>
-                <td>{{ quiz['quiz_id'] }}</td>
-                <td>{{ quiz['subject'] }}</td>
-                <td>{{ quiz['length'] }}</td>
-                <td>{{ quiz['date'] }}</td>
+                <td>{{ result['student_id'] }}</td>
+                <td>{{ result['student_name'] }}</td>
+                <td>{{ result['quiz_id'] }}</td>
+                <td>{{ result['score'] }}</td>
             </tr>
         {% endfor %}
     </table>
