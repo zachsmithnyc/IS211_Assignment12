@@ -20,6 +20,7 @@ def index():
     return render_template('dashboard/dashboard.html', students=students, quizzes=quizzes)
 
 @bp.route('/student/add', methods = ('GET', 'POST'))
+@login_required
 def add_student():
     if request.method == 'POST':
         name = request.form['name']
@@ -48,6 +49,7 @@ def add_student():
     return render_template('dashboard/addstudent.html')
 
 @bp.route('/quiz/add', methods = ('GET', 'POST'))
+@login_required
 def add_quiz():
     if request.method == 'POST':
         subject = request.form['subject']
@@ -88,6 +90,7 @@ def get_results(id):
 
 
 @bp.route('/results/<int:id>', methods=('GET', 'POST'))
+@login_required
 def view_results(id):
     results = get_results(id)
     error = None
@@ -102,11 +105,17 @@ def view_results(id):
 
 
 @bp.route('/result/add', methods=('GET', 'POST'))
+@login_required
 def add_result():
     db = get_db()
-    options = db.execute(
-        'SELECT s.id, s.name, q.quiz_id'
-        ' FROM quizzes q CROSS JOIN students s'
+    student_options = db.execute(
+        'SELECT s.name, s.id'
+        ' FROM students s'
+    ).fetchall()
+
+    quiz_options = db.execute(
+        'SELECT quiz_id'
+        ' FROM quizzes'
     ).fetchall()
 
     if request.method == 'POST':
@@ -137,6 +146,6 @@ def add_result():
             db.commit()
             return redirect(url_for('dashboard'))
 
-    return render_template('dashboard/add_result.html', options=options)
+    return render_template('dashboard/add_result.html', student_options=student_options, quiz_options=quiz_options)
 
     
