@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ student['id'] }}</td>
                 <td>{{ student['name'] }}</td>
-                <td><a class="action" href="{{ url_for('dashboard.view_results', id=student['id']) }}">View Quiz Results</a></td>
+                <td><a class="action" href="{{ url_for('view_results', id=student['id']) }}">View Quiz Results</a></td>
             </tr>
         {% endfor %}
     </table>
