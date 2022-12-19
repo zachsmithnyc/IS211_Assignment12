@@ -52,6 +52,18 @@ def init_db():
     with app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+def register_admin():
+    username = 'admin'
+    password = 'password'
+
+    db = get_db()
+    db.execute(
+        "INSERT INTO user (username, password) VALUES (?,?)",
+        (username, generate_password_hash(password)),
+    )
+    db.commit()
+
+
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():
@@ -285,4 +297,5 @@ def add_result():
 
 if __name__ == '__main__':
     init_db()
+    register_admin()
     app.run(debug=True)
